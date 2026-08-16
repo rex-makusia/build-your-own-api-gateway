@@ -1,17 +1,26 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
+    "log"
+    "net/http"
+    "build-your-own-api-gateway/internal/gateway"
+    "build-your-own-api-gateway/api"
+    "build-your-own-api-gateway/internal/middleware"
 )
 
-func helloHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, World!")
-}
-
 func main() {
-	http.HandleFunc("/hello", helloHandler)
-	fmt.Println("Starting server on :8080")
-	http.ListenAndServe(":8080", nil)
+    // Initialize the server
+    srv := gateway.NewServer()
 
+    // Set up middleware
+    srv.Use(middleware.AuthMiddleware)
+
+    // Set up routes
+    api.RegisterRoutes(srv)
+
+    // Start the server
+    log.Println("Starting server on :8080")
+    if err := http.ListenAndServe(":8080", srv); err != nil {
+        log.Fatalf("Could not start server: %s\n", err)
+    }
 }
