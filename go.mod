@@ -1,3 +1,3 @@
-module https://github.com/rex-makusia/build-your-own-api-gateway
+module github.com/rex-makusia/build-your-own-api-gateway
 
 go 1.21
