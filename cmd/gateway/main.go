@@ -17,7 +17,7 @@ func main() {
 	})
 
 	//Register handler for health check
-	http.HandleFunc("/health", func (w http.ResponseWriter, r *http.Request) {)
+	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		fmt.Fprintf(w, `{"status": "healthy"}`)
 	})
@@ -25,5 +25,5 @@ func main() {
 	//Start the server
 	addr := "0.0.0.0:8080"
 	log.Printf("Server starting on %s\n", addr)
-	log.Fatal(http.ListenAndServer(addr, nil))
+	log.Fatal(http.ListenAndServe(addr, nil))
 }
